@@ -15,11 +15,11 @@ public class CreditService {
         BigDecimal annuityRate;
         Integer term = rq.getTerm();
 
-        monthlyRate = rq.getInterest().divide(BigDecimal.valueOf(12)).divide(BigDecimal.valueOf(100));
+        monthlyRate = rq.getInterest().divide(BigDecimal.valueOf(12), 10, RoundingMode.UP).divide(BigDecimal.valueOf(100), 10, RoundingMode.UP);
 
         BigDecimal intermediate = BigDecimal.ONE.add(monthlyRate).pow(term);
 
-        annuityRate = monthlyRate.multiply(intermediate).divide(intermediate.subtract(BigDecimal.ONE));
+        annuityRate = monthlyRate.multiply(intermediate).divide(intermediate.subtract(BigDecimal.ONE),10, RoundingMode.UP);
 
         paymentAmount = annuityRate.multiply(rq.getPrincipal()).setScale(2, RoundingMode.CEILING);
 
