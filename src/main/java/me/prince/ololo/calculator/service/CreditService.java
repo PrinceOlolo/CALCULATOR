@@ -10,20 +10,20 @@ import java.math.RoundingMode;
 @Service
 public class CreditService {
     public CreditDataRs calculatePayment(CreditDataRq rq) {
-        var monthlyRate = rq.getInterest()
+        var monthlyRate = rq.interest()
                 .divide(BigDecimal.valueOf(12), 10, RoundingMode.UP)
                 .divide(BigDecimal.valueOf(100), 10, RoundingMode.UP);
 
         var intermediate = BigDecimal.ONE
                 .add(monthlyRate)
-                .pow(rq.getTerm());
+                .pow(rq.term());
 
         var annuityRate = monthlyRate.multiply(intermediate)
                 .divide(intermediate
                         .subtract(BigDecimal.ONE), 10, RoundingMode.UP);
 
         var paymentAmount = annuityRate
-                .multiply(rq.getPrincipal())
+                .multiply(rq.principal())
                 .setScale(2, RoundingMode.CEILING);
 
         return new CreditDataRs(paymentAmount);
