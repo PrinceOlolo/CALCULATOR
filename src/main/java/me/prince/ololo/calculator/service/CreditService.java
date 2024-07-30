@@ -14,7 +14,7 @@ public class CreditService {
                 .divide(BigDecimal.valueOf(12), 10, RoundingMode.UP)
                 .divide(BigDecimal.valueOf(100), 10, RoundingMode.UP);
 
-        BigDecimal intermediate = BigDecimal.ONE
+        var intermediate = BigDecimal.ONE
                 .add(monthlyRate)
                 .pow(rq.getTerm());
 
