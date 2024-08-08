@@ -3,6 +3,7 @@ package me.prince.ololo.calculator.controller;
 import me.prince.ololo.calculator.dto.CreditDataRq;
 import me.prince.ololo.calculator.dto.CreditDataRs;
 import me.prince.ololo.calculator.service.CreditService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,13 @@ public class CreditController {
 
     private final CreditService service;
 
-    public CreditController(CreditService service) {
+    public CreditController(@Qualifier("annuitetCreditService") CreditService service) {
         this.service = service;
     }
 
     @PostMapping("/payment")
     public CreditDataRs calculatePayment(@RequestBody CreditDataRq rq) {
-        return service.calculatePayment(rq);
+        return service.calculatePayment(rq) ;
     }
 
 }
